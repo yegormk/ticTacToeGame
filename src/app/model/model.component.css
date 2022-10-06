@@ -1,0 +1,20 @@
+.register-form{
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0rem;
+  padding: 1rem .5rem;
+  font-size: 1rem;
+}
+
+.button-board{
+  font-size: 1rem;
+}
+
+.title{
+  font-size: 2rem;
+}
+
+.button-board:hover{
+  background-color: black;
+  color: white;
+}

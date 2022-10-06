@@ -1,0 +1,53 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.outer-cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.board-wrapper{
+    display: grid;
+    grid-template-columns: 10rem 10rem 10rem;
+    grid-gap: 0rem;
+}
+
+app-board-cell{
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    height: 10rem;
+}
+
+.button-board{
+    display: inline-block;
+    font-size: 1.7rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    border: none;
+    margin: 2rem 0rem;
+}
+
+.button-board:hover{
+  background-color: black;
+  color: white;
+}
+
+.result{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.title{
+    font-size: 8rem;
+    color: black;
+    margin: 3rem 0rem;
+}
+
+.infoTable{
+  font-size: 2rem;
+}

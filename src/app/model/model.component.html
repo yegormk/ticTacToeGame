@@ -1,0 +1,20 @@
+<main>
+  <form
+    class="register-form"
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <p class="title">Enter Nicknames</p>
+    <mat-form-field class="inputNickname" appearance="fill">
+      <mat-label>Nickname 'X' Player</mat-label>
+      <input matInput placeholder="Enter nickname" formControlName="firstPlayer">
+    </mat-form-field>
+
+    <mat-form-field class="inputNickname" appearance="fill">
+      <mat-label>Nickname 'O' Player</mat-label>
+      <input matInput placeholder="Enter nickname" formControlName="secondPlayer">
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" class="button-board">Start New Game</button>
+  </form>
+</main>
