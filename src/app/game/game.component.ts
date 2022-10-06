@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { nicknames } from '../Interfaces/players.interface';
 
 @Component({
