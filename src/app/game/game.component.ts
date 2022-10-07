@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
     };
   }
 
-  newGame(action: string) {
+  newGame(action: string): void {
     action === 'Continue' ? (this.listOfInfoPlayers.freshPage = false) : (this.listOfInfoPlayers.freshPage = true);
     this.listOfInfoPlayers.squares = Array(9).fill('');
     this.listOfInfoPlayers.lastWinner = '';
@@ -37,7 +37,7 @@ export class GameComponent implements OnInit {
     return this.listOfInfoPlayers.xIsNext ? this.listOfInfoPlayers.firstPlayer : this.listOfInfoPlayers.secondPlayer;
   }
 
-  makeMove(idx: number) {
+  makeMove(idx: number): void {
     if (!this.listOfInfoPlayers.squares[idx]) {
       this.player === this.listOfInfoPlayers.firstPlayer
         ? this.listOfInfoPlayers.squares.splice(idx, 1, 'X')
@@ -59,7 +59,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  checkerForDraw() {
+  checkerForDraw(): void {
     let isOnlyDraw = true;
 
     if (this.listOfInfoPlayers.counter === 8) {
@@ -94,7 +94,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  calculateWinner(squares: string[]) {
+  calculateWinner(squares: string[]): string {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -119,7 +119,7 @@ export class GameComponent implements OnInit {
     return '';
   }
 
-  receiveFormData($event: nicknames) {
+  receiveFormData($event: nicknames): void {
     this.listOfInfoPlayers = $event;
     this.newGame('Continue');
   }
