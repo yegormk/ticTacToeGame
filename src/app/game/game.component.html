@@ -7,9 +7,7 @@
   ></app-model-window>
 
   <div
-    *ngIf="!listOfInfoPlayers.lastWinner &&
-        !(listOfInfoPlayers.counter === 9) &&
-        !listOfInfoPlayers.freshPage"
+    *ngIf="isGameActive()"
     class="infoTable"
   >
     <p class="currentPlayer">Current Player: {{player}}</p>

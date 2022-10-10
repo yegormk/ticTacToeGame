@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { nicknames } from '../Interfaces/players.interface';
+import { infoOfTheGame } from '../Interfaces/information.interface';
 
 @Component({
   selector: 'app-model-window',
@@ -9,7 +9,7 @@ import { nicknames } from '../Interfaces/players.interface';
   styleUrls: ['./model.component.css'],
 })
 export class ModelComponent implements OnInit {
-  @Output() formEvent = new EventEmitter<nicknames>();
+  @Output() formEvent = new EventEmitter<infoOfTheGame>();
 
   registerForm!: FormGroup;
 

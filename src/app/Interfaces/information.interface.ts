@@ -1,4 +1,4 @@
-export interface nicknames {
+export interface infoOfTheGame {
   firstPlayer: string;
   firstScore: number;
   secondPlayer: string;

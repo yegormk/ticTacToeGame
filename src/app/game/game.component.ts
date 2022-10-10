@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { nicknames } from '../Interfaces/players.interface';
+import { infoOfTheGame } from '../Interfaces/information.interface';
 
 @Component({
   selector: 'app-game',
@@ -8,7 +8,7 @@ import { nicknames } from '../Interfaces/players.interface';
   styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
-  listOfInfoPlayers!: nicknames;
+  listOfInfoPlayers!: infoOfTheGame;
 
   constructor() {}
 
@@ -33,7 +33,7 @@ export class GameComponent implements OnInit {
     this.listOfInfoPlayers.counter = 0;
   }
 
-  get player() {
+  get player(): string {
     return this.listOfInfoPlayers.xIsNext ? this.listOfInfoPlayers.firstPlayer : this.listOfInfoPlayers.secondPlayer;
   }
 
@@ -119,7 +119,13 @@ export class GameComponent implements OnInit {
     return '';
   }
 
-  receiveFormData($event: nicknames): void {
+  isGameActive(): boolean {
+    return (
+      !this.listOfInfoPlayers.lastWinner && !(this.listOfInfoPlayers.counter === 9) && !this.listOfInfoPlayers.freshPage
+    );
+  }
+
+  receiveFormData($event: infoOfTheGame): void {
     this.listOfInfoPlayers = $event;
     this.newGame('Continue');
   }
