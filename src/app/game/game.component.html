@@ -1,8 +1,8 @@
 <div class="outer-cont">
-  <p class="title" *ngIf="listOfInfoPlayers.freshPage">Tic-Tac-Toe</p>
+  <p class="title" *ngIf="infoOfGame.freshPage">Tic-Tac-Toe</p>
 
   <app-model-window
-    *ngIf="listOfInfoPlayers.freshPage"
+    *ngIf="infoOfGame.freshPage"
     (formEvent)="receiveFormData($event)"
   ></app-model-window>
 
@@ -24,11 +24,11 @@
   </div>
 
   <div
-    *ngIf="listOfInfoPlayers.lastWinner || listOfInfoPlayers.counter === 9"
+    *ngIf="infoOfGame.lastWinner || infoOfGame.counter === 9"
     class="result"
   >
-    <p class="title" *ngIf="listOfInfoPlayers.lastWinner">{{listOfInfoPlayers.lastWinner}} won!!!</p>
-    <p class="title" *ngIf="listOfInfoPlayers.counter === 9 && !listOfInfoPlayers.lastWinner">Draw!!!</p>
+    <p class="title" *ngIf="infoOfGame.lastWinner">{{infoOfGame.lastWinner}} won!!!</p>
+    <p class="title" *ngIf="infoOfGame.counter === 9 && !infoOfGame.lastWinner">Draw!!!</p>
     <button
       mat-raised-button
       class="button-board"
@@ -44,9 +44,9 @@
   </div>
 
   <div class="board-wrapper"
-       *ngIf="!listOfInfoPlayers.lastWinner &&  !(listOfInfoPlayers.counter === 9) && !listOfInfoPlayers.freshPage">
+       *ngIf="!infoOfGame.lastWinner &&  !(infoOfGame.counter === 9) && !infoOfGame.freshPage">
     <app-board-cell
-      *ngFor="let val of listOfInfoPlayers.squares; let i = index"
+      *ngFor="let val of infoOfGame.squares; let i = index"
       [value]="val"
       (click)="makeMove(i)"
     ></app-board-cell>

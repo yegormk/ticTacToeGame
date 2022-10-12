@@ -7,5 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class BoardComponent {
   @Input() value!: string;
-  constructor() {}
 }

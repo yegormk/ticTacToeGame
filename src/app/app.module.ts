@@ -10,8 +10,18 @@ import { BoardComponent } from './board/board.component';
 import { ModelComponent } from './model/model.component';
 
 @NgModule({
-  declarations: [AppComponent, GameComponent, BoardComponent, ModelComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, MaterialModule, ReactiveFormsModule],
+  declarations: [
+    AppComponent,
+    GameComponent,
+    BoardComponent,
+    ModelComponent,
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

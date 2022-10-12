@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { infoOfTheGame } from '../Interfaces/information.interface';
+import {infoOfGame, playersInfo} from '../Interfaces/information.interface';
 
 @Component({
   selector: 'app-game',
@@ -8,7 +8,8 @@ import { infoOfTheGame } from '../Interfaces/information.interface';
   styleUrls: ['./game.component.css'],
 })
 export class GameComponent implements OnInit {
-  listOfInfoPlayers!: infoOfTheGame;
+  listOfInfoPlayers!: playersInfo;
+  infoOfGame!: infoOfGame;
 
   constructor() {}
 
@@ -18,43 +19,45 @@ export class GameComponent implements OnInit {
       secondPlayer: '',
       firstScore: 0,
       secondScore: 0,
+    };
+    this.infoOfGame = {
       squares: [],
       xIsNext: true,
       counter: 0,
       lastWinner: '',
       freshPage: true,
-    };
+    }
   }
 
   newGame(action: string): void {
-    action === 'Continue' ? (this.listOfInfoPlayers.freshPage = false) : (this.listOfInfoPlayers.freshPage = true);
-    this.listOfInfoPlayers.squares = Array(9).fill('');
-    this.listOfInfoPlayers.lastWinner = '';
-    this.listOfInfoPlayers.counter = 0;
+    action === 'Continue' ? (this.infoOfGame.freshPage = false) : (this.infoOfGame.freshPage = true);
+    this.infoOfGame.squares = Array(9).fill('');
+    this.infoOfGame.lastWinner = '';
+    this.infoOfGame.counter = 0;
   }
 
   get player(): string {
-    return this.listOfInfoPlayers.xIsNext ? this.listOfInfoPlayers.firstPlayer : this.listOfInfoPlayers.secondPlayer;
+    return this.infoOfGame.xIsNext ? this.listOfInfoPlayers.firstPlayer : this.listOfInfoPlayers.secondPlayer;
   }
 
   makeMove(idx: number): void {
-    if (!this.listOfInfoPlayers.squares[idx]) {
+    if (!this.infoOfGame.squares[idx]) {
       this.player === this.listOfInfoPlayers.firstPlayer
-        ? this.listOfInfoPlayers.squares.splice(idx, 1, 'X')
-        : this.listOfInfoPlayers.squares.splice(idx, 1, 'O');
-      this.listOfInfoPlayers.xIsNext = !this.listOfInfoPlayers.xIsNext;
-      this.listOfInfoPlayers.counter++;
+        ? this.infoOfGame.squares.splice(idx, 1, 'X')
+        : this.infoOfGame.squares.splice(idx, 1, 'O');
+      this.infoOfGame.xIsNext = !this.infoOfGame.xIsNext;
+      this.infoOfGame.counter++;
     }
 
-    this.listOfInfoPlayers.lastWinner = this.calculateWinner(this.listOfInfoPlayers.squares);
+    this.infoOfGame.lastWinner = this.calculateWinner(this.infoOfGame.squares);
 
-    if (this.listOfInfoPlayers.lastWinner === this.listOfInfoPlayers.firstPlayer) {
+    if (this.infoOfGame.lastWinner === this.listOfInfoPlayers.firstPlayer) {
       this.listOfInfoPlayers.firstScore = this.listOfInfoPlayers.firstScore + 1;
-    } else if (this.listOfInfoPlayers.lastWinner === this.listOfInfoPlayers.secondPlayer) {
+    } else if (this.infoOfGame.lastWinner === this.listOfInfoPlayers.secondPlayer) {
       this.listOfInfoPlayers.secondScore = this.listOfInfoPlayers.secondScore + 1;
     }
 
-    if (this.listOfInfoPlayers.counter > 6) {
+    if (this.infoOfGame.counter > 6) {
       this.checkerForDraw();
     }
   }
@@ -62,35 +65,35 @@ export class GameComponent implements OnInit {
   checkerForDraw(): void {
     let isOnlyDraw = true;
 
-    if (this.listOfInfoPlayers.counter === 8) {
-      const indexOfLastElement = this.listOfInfoPlayers.squares.indexOf('');
+    if (this.infoOfGame.counter === 8) {
+      const indexOfLastElement = this.infoOfGame.squares.indexOf('');
 
-      this.listOfInfoPlayers.xIsNext
-        ? (this.listOfInfoPlayers.squares[indexOfLastElement] = 'X')
-        : (this.listOfInfoPlayers.squares[indexOfLastElement] = 'O');
-      if (this.calculateWinner(this.listOfInfoPlayers.squares) !== '') {
+      this.infoOfGame.xIsNext
+        ? (this.infoOfGame.squares[indexOfLastElement] = 'X')
+        : (this.infoOfGame.squares[indexOfLastElement] = 'O');
+      if (this.calculateWinner(this.infoOfGame.squares) !== '') {
         isOnlyDraw = false;
-        this.listOfInfoPlayers.squares.splice(indexOfLastElement, 1, '');
+        this.infoOfGame.squares.splice(indexOfLastElement, 1, '');
       }
     }
 
-    for (let i = 0; i < this.listOfInfoPlayers.squares.length; i++) {
-      if (isOnlyDraw === true && this.listOfInfoPlayers.squares[i] === '') {
-        this.listOfInfoPlayers.squares[i] = 'X';
-        if (this.calculateWinner(this.listOfInfoPlayers.squares) !== '') {
+    for (let i = 0; i < this.infoOfGame.squares.length; i++) {
+      if (isOnlyDraw === true && this.infoOfGame.squares[i] === '') {
+        this.infoOfGame.squares[i] = 'X';
+        if (this.calculateWinner(this.infoOfGame.squares) !== '') {
           isOnlyDraw = false;
         } else {
-          this.listOfInfoPlayers.squares[i] = 'O';
-          this.calculateWinner(this.listOfInfoPlayers.squares) !== '' ? (isOnlyDraw = false) : (isOnlyDraw = true);
+          this.infoOfGame.squares[i] = 'O';
+          this.calculateWinner(this.infoOfGame.squares) !== '' ? (isOnlyDraw = false) : (isOnlyDraw = true);
         }
-        this.listOfInfoPlayers.squares.splice(i, 1, '');
+        this.infoOfGame.squares.splice(i, 1, '');
       } else if (isOnlyDraw === false) {
         break;
       }
     }
 
     if (isOnlyDraw) {
-      this.listOfInfoPlayers.counter = 9;
+      this.infoOfGame.counter = 9;
     }
   }
 
@@ -121,11 +124,11 @@ export class GameComponent implements OnInit {
 
   isGameActive(): boolean {
     return (
-      !this.listOfInfoPlayers.lastWinner && !(this.listOfInfoPlayers.counter === 9) && !this.listOfInfoPlayers.freshPage
+      !this.infoOfGame.lastWinner && !(this.infoOfGame.counter === 9) && !this.infoOfGame.freshPage
     );
   }
 
-  receiveFormData($event: infoOfTheGame): void {
+  receiveFormData($event: playersInfo): void {
     this.listOfInfoPlayers = $event;
     this.newGame('Continue');
   }
