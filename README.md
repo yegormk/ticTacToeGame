@@ -3,6 +3,8 @@
 ```angular2html
 ng deploy --base-href=/<repositoryname>/
 ```
+#Link to this project on GitHub pages
+https://yegormk.github.io/ticTacToeGame/
 
 # AngularTemplateEslintGhPages
 
