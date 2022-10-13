@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {infoOfGame, playersInfo} from '../Interfaces/information.interface';
+import { infoOfGame, playersInfo } from '../Interfaces/information.interface';
 
 @Component({
   selector: 'app-game',
@@ -26,14 +26,15 @@ export class GameComponent implements OnInit {
       counter: 0,
       lastWinner: '',
       freshPage: true,
-    }
+    };
   }
 
   newGame(action: string): void {
     action === 'Continue' ? (this.infoOfGame.freshPage = false) : (this.infoOfGame.freshPage = true);
-    this.infoOfGame.squares = Array(9).fill('');
+    this.infoOfGame.squares = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
     this.infoOfGame.lastWinner = '';
     this.infoOfGame.counter = 0;
+    this.infoOfGame.xIsNext = true;
   }
 
   get player(): string {
@@ -41,7 +42,7 @@ export class GameComponent implements OnInit {
   }
 
   makeMove(idx: number): void {
-    if (!this.infoOfGame.squares[idx]) {
+    if (this.infoOfGame.squares[idx] !== 'X' && this.infoOfGame.squares[idx] !== 'O') {
       this.player === this.listOfInfoPlayers.firstPlayer
         ? this.infoOfGame.squares.splice(idx, 1, 'X')
         : this.infoOfGame.squares.splice(idx, 1, 'O');
@@ -57,6 +58,11 @@ export class GameComponent implements OnInit {
       this.listOfInfoPlayers.secondScore = this.listOfInfoPlayers.secondScore + 1;
     }
 
+    if (!this.infoOfGame.xIsNext && this.listOfInfoPlayers.secondPlayer === 'Artificial Intelligence') {
+      let arrEmpty = this.infoOfGame.squares.filter(s => s !== 'X' && s !== 'O');
+      this.makeMove(Number(arrEmpty[Math.floor(Math.random() * arrEmpty.length)]));
+    }
+
     if (this.infoOfGame.counter > 6) {
       this.checkerForDraw();
     }
@@ -66,7 +72,8 @@ export class GameComponent implements OnInit {
     let isOnlyDraw = true;
 
     if (this.infoOfGame.counter === 8) {
-      const indexOfLastElement = this.infoOfGame.squares.indexOf('');
+      const indexOfLastElement = this.infoOfGame.squares.indexOf(
+        this.infoOfGame.squares.filter(cell => cell !== 'X' && cell !== 'O')[0]);
 
       this.infoOfGame.xIsNext
         ? (this.infoOfGame.squares[indexOfLastElement] = 'X')
@@ -78,7 +85,7 @@ export class GameComponent implements OnInit {
     }
 
     for (let i = 0; i < this.infoOfGame.squares.length; i++) {
-      if (isOnlyDraw === true && this.infoOfGame.squares[i] === '') {
+      if (isOnlyDraw === true && this.infoOfGame.squares[i] !== 'X' && this.infoOfGame.squares[i] !== 'O') {
         this.infoOfGame.squares[i] = 'X';
         if (this.calculateWinner(this.infoOfGame.squares) !== '') {
           isOnlyDraw = false;
@@ -123,9 +130,7 @@ export class GameComponent implements OnInit {
   }
 
   isGameActive(): boolean {
-    return (
-      !this.infoOfGame.lastWinner && !(this.infoOfGame.counter === 9) && !this.infoOfGame.freshPage
-    );
+    return !this.infoOfGame.lastWinner && !(this.infoOfGame.counter === 9) && !this.infoOfGame.freshPage;
   }
 
   receiveFormData($event: playersInfo): void {

@@ -12,12 +12,18 @@ export class ModelComponent implements OnInit {
   @Output() formEvent = new EventEmitter<playersInfo>();
 
   registerForm!: FormGroup;
+  isPlayWithBot: boolean = false;
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       firstPlayer: new FormControl('Player 1', [Validators.required]),
       secondPlayer: new FormControl('Player 2', [Validators.required]),
     });
+  }
+
+  playWithBot() {
+    this.registerForm.value.secondPlayer = 'Artificial Intelligence';
+    this.isPlayWithBot = true;
   }
 
   onSubmit(): void {

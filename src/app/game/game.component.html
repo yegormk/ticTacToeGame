@@ -10,7 +10,7 @@
     *ngIf="isGameActive()"
     class="infoTable"
   >
-    <p class="currentPlayer">Current Player: {{player}}</p>
+    <p *ngIf="this.listOfInfoPlayers.secondPlayer !== 'Artificial Intelligence'" class="currentPlayer">Current Player: {{player}}</p>
     <div class="scoreTable">
       <p class="scoreTableFirst">
         {{listOfInfoPlayers.firstPlayer}}(X):

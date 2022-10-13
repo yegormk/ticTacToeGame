@@ -16,6 +16,6 @@ button {
 
 @media screen and (max-width: 769px) {
   button{
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 }
