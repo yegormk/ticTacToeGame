@@ -11,8 +11,6 @@ export class GameComponent implements OnInit {
   listOfInfoPlayers!: playersInfo;
   infoOfGame!: infoOfGame;
 
-  constructor() {}
-
   ngOnInit(): void {
     this.listOfInfoPlayers = {
       firstPlayer: '',
@@ -37,6 +35,10 @@ export class GameComponent implements OnInit {
     this.infoOfGame.xIsNext = true;
   }
 
+  isGameActive(): boolean {
+    return !this.infoOfGame.lastWinner && !(this.infoOfGame.counter === 9) && !this.infoOfGame.freshPage;
+  }
+
   get player(): string {
     return this.infoOfGame.xIsNext ? this.listOfInfoPlayers.firstPlayer : this.listOfInfoPlayers.secondPlayer;
   }
@@ -52,15 +54,18 @@ export class GameComponent implements OnInit {
 
     this.infoOfGame.lastWinner = this.calculateWinner(this.infoOfGame.squares);
 
-    if (this.infoOfGame.lastWinner === this.listOfInfoPlayers.firstPlayer) {
-      this.listOfInfoPlayers.firstScore = this.listOfInfoPlayers.firstScore + 1;
-    } else if (this.infoOfGame.lastWinner === this.listOfInfoPlayers.secondPlayer) {
-      this.listOfInfoPlayers.secondScore = this.listOfInfoPlayers.secondScore + 1;
-    }
+    this.infoOfGame.lastWinner === this.listOfInfoPlayers.firstPlayer
+      ? (this.listOfInfoPlayers.firstScore =
+          this.listOfInfoPlayers.firstScore + Number(Boolean(this.infoOfGame.lastWinner)))
+      : (this.listOfInfoPlayers.secondScore =
+          this.listOfInfoPlayers.secondScore + Number(Boolean(this.infoOfGame.lastWinner)));
 
-    if (!this.infoOfGame.xIsNext && this.listOfInfoPlayers.secondPlayer === 'Artificial Intelligence') {
-      let arrEmpty = this.infoOfGame.squares.filter(s => s !== 'X' && s !== 'O');
-      this.makeMove(Number(arrEmpty[Math.floor(Math.random() * arrEmpty.length)]));
+    if (
+      !this.infoOfGame.xIsNext &&
+      this.listOfInfoPlayers.secondPlayer === 'Artificial Intelligence' &&
+      this.infoOfGame.lastWinner === ''
+    ) {
+      this.aiMove();
     }
 
     if (this.infoOfGame.counter > 6) {
@@ -68,12 +73,30 @@ export class GameComponent implements OnInit {
     }
   }
 
+  aiMove(): void {
+    let arrEmpty = this.infoOfGame.squares.filter(s => s !== 'X' && s !== 'O');
+
+    for (let i = 0; i < arrEmpty.length; i++) {
+      const arrCopy = this.infoOfGame.squares.slice();
+      arrCopy[Number(arrEmpty[i])] = 'O';
+
+      if (this.calculateWinner(arrCopy) !== '') {
+        this.makeMove(Number(arrEmpty[i]));
+        return;
+      } else {
+        arrCopy[Number(arrEmpty[i])] = arrEmpty[i];
+      }
+    }
+    this.makeMove(Number(arrEmpty[Math.floor(Math.random() * arrEmpty.length)]));
+  }
+
   checkerForDraw(): void {
     let isOnlyDraw = true;
 
     if (this.infoOfGame.counter === 8) {
       const indexOfLastElement = this.infoOfGame.squares.indexOf(
-        this.infoOfGame.squares.filter(cell => cell !== 'X' && cell !== 'O')[0]);
+        this.infoOfGame.squares.filter(cell => cell !== 'X' && cell !== 'O')[0]
+      );
 
       this.infoOfGame.xIsNext
         ? (this.infoOfGame.squares[indexOfLastElement] = 'X')
@@ -127,10 +150,6 @@ export class GameComponent implements OnInit {
     }
 
     return '';
-  }
-
-  isGameActive(): boolean {
-    return !this.infoOfGame.lastWinner && !(this.infoOfGame.counter === 9) && !this.infoOfGame.freshPage;
   }
 
   receiveFormData($event: playersInfo): void {

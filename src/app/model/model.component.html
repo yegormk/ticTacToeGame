@@ -21,7 +21,7 @@
       *ngIf="!isPlayWithBot"
       mat-raised-button
       class="button-board"
-      (click)="playWithBot()"
+      (click)="this.isPlayWithBot = true"
     >Play With AI
     </button>
   </form>

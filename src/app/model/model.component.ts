@@ -22,7 +22,6 @@ export class ModelComponent implements OnInit {
   }
 
   playWithBot() {
-    this.registerForm.value.secondPlayer = 'Artificial Intelligence';
     this.isPlayWithBot = true;
   }
 
@@ -30,7 +29,7 @@ export class ModelComponent implements OnInit {
     if (this.registerForm.valid) {
       this.formEvent.emit({
         firstPlayer: this.registerForm.value.firstPlayer,
-        secondPlayer: this.registerForm.value.secondPlayer,
+        secondPlayer: this.isPlayWithBot ? 'Artificial Intelligence' : this.registerForm.value.secondPlayer,
         firstScore: 0,
         secondScore: 0,
       });
