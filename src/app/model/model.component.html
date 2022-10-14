@@ -1,0 +1,28 @@
+<main>
+  <form
+    class="register-form"
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <p class="title" *ngIf="!isPlayWithBot">Enter Nicknames</p>
+    <mat-form-field class="inputNickname" appearance="fill">
+      <mat-label *ngIf="!isPlayWithBot">Nickname 'X' Player</mat-label>
+      <mat-label *ngIf="isPlayWithBot">Enter Your Nickname</mat-label>
+      <input matInput placeholder="Enter nickname" formControlName="firstPlayer">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!isPlayWithBot" class="inputNickname" appearance="fill">
+      <mat-label>Nickname 'O' Player</mat-label>
+      <input matInput placeholder="Enter nickname" formControlName="secondPlayer">
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" class="button-board">Start New Game</button>
+    <button
+      *ngIf="!isPlayWithBot"
+      mat-raised-button
+      class="button-board"
+      (click)="this.isPlayWithBot = true"
+    >Play With AI
+    </button>
+  </form>
+</main>

@@ -1,0 +1,54 @@
+<div class="outer-cont">
+  <p class="title" *ngIf="infoOfGame.freshPage">Tic-Tac-Toe</p>
+
+  <app-model-window
+    *ngIf="infoOfGame.freshPage"
+    (formEvent)="receiveFormData($event)"
+  ></app-model-window>
+
+  <div
+    *ngIf="isGameActive()"
+    class="infoTable"
+  >
+    <p *ngIf="this.listOfInfoPlayers.secondPlayer !== 'Artificial Intelligence'" class="currentPlayer">Current Player: {{player}}</p>
+    <div class="scoreTable">
+      <p class="scoreTableFirst">
+        {{listOfInfoPlayers.firstPlayer}}(X):
+        {{listOfInfoPlayers.firstScore}}
+      </p>
+      <p class="scoreTableSecond">
+        {{listOfInfoPlayers.secondPlayer}}(O):
+        {{listOfInfoPlayers.secondScore}}
+      </p>
+    </div>
+  </div>
+
+  <div
+    *ngIf="infoOfGame.lastWinner || infoOfGame.counter === 9"
+    class="result"
+  >
+    <p class="title" *ngIf="infoOfGame.lastWinner">{{infoOfGame.lastWinner}} won!!!</p>
+    <p class="title" *ngIf="infoOfGame.counter === 9 && !infoOfGame.lastWinner">Draw!!!</p>
+    <button
+      mat-raised-button
+      class="button-board"
+      (click)="newGame('Continue')"
+    >Continue
+    </button>
+    <button
+      mat-raised-button
+      class="button-board"
+      (click)="newGame('NewGame')"
+    >Start New Game
+    </button>
+  </div>
+
+  <div class="board-wrapper"
+       *ngIf="!infoOfGame.lastWinner &&  !(infoOfGame.counter === 9) && !infoOfGame.freshPage">
+    <app-board-cell
+      *ngFor="let val of infoOfGame.squares; let i = index"
+      [value]="val"
+      (click)="makeMove(i)"
+    ></app-board-cell>
+  </div>
+</div>
